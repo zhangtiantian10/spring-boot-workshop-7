@@ -12,33 +12,23 @@
     <meta name="format-detection" content="telephone=no"/>
 
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
-    <title>User List</title>
+    <title>Add User</title>
 
 </head>
 <body>
 
 <div class="container">
-    <div class="well">
-        <a href="/users/add" class="btn btn-primary">添加用户</a>
-    </div>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>姓名</th>
-            <th>年龄</th>
-        </tr>
-        </thead>
-        <tbody>
-        <th:block th:each="user,iter : ${userList}">
-            <tr>
-                <td th:text="${iter.index+1}"></td>
-                <td th:text="${user.name}"></td>
-                <td th:text="${user.age}"></td>
-            </tr>
-        </th:block>
-        </tbody>
-    </table>
+    <form action="/users/add" method="post">
+        <div class="form-group">
+            <label for="name">姓名</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="请输入姓名">
+        </div>
+        <div class="form-group">
+            <label for="age">年龄</label>
+            <input type="number" class="form-control" name="age" id="age" placeholder="请输入年龄">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
 </div>
 </body>
 <script src="/js/jquery.min.js" charset="utf-8"></script>
