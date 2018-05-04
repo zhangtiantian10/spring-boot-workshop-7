@@ -3,13 +3,16 @@ package com.thoughtworks.springbootjpademo.entity;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id

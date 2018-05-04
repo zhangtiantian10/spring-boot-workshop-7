@@ -11,7 +11,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,16 +25,13 @@ public class UserRepositoryTest {
 
     private static final String MOCK_ID = "mock_id";
 
-
     @Before
     public void init() {
         User user1 = new User();
         user1.setName("user1");
         user1.setAge(18);
-        user1.setCreateTime(new Date());
         userRepository.save(user1);
     }
-
 
     @Test
     public void should_return_all_users() {
@@ -60,7 +56,6 @@ public class UserRepositoryTest {
         User user = new User();
         user.setName("user2");
         user.setAge(19);
-        user.setCreateTime(new Date());
         user = userRepository.save(user);
         Assert.assertNotNull(user.getId());
     }
