@@ -3,6 +3,7 @@ package com.thoughtworks.springbootjpademo.controller;
 import com.thoughtworks.springbootjpademo.entity.User;
 import com.thoughtworks.springbootjpademo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ public class UserController {
 
     @GetMapping()
     public String list(Model model) {
-        List<User> userList = userRepository.findAll();
+        List<User> userList = userRepository.findAll(Sort.by("id").ascending());
         model.addAttribute("userList", userList);
         return "user/list";
     }
