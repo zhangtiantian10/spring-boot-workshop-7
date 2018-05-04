@@ -43,5 +43,18 @@ public class UserController {
         return "redirect:/users";
     }
 
+    @GetMapping("{id}/edit")
+    public String toEdit(@PathVariable String id, Model model) {
+        User user = userRepository.findById(id).get();
+        model.addAttribute("user", user);
+        return "user/edit";
+    }
+
+    @PostMapping("edit")
+    public String edit(User user) {
+        userRepository.save(user);
+        return "redirect:/users";
+    }
+
 
 }
