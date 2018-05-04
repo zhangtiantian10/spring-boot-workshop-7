@@ -27,6 +27,7 @@
             <th>#</th>
             <th>姓名</th>
             <th>年龄</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
@@ -35,6 +36,9 @@
                 <td th:text="${iter.index+1}"></td>
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.age}"></td>
+                <td>
+                    <a th:href="@{'users/'+${user.id}+'/delete'}" class="btn btn-danger">delete</a>
+                </td>
             </tr>
         </th:block>
         </tbody>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -33,6 +34,12 @@ public class UserController {
     @PostMapping("add")
     public String add(User user) {
         userRepository.save(user);
+        return "redirect:/users";
+    }
+
+    @GetMapping("{id}/delete")
+    public String delete(@PathVariable String id) {
+        userRepository.deleteById(id);
         return "redirect:/users";
     }
 
