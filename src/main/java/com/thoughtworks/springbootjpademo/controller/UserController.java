@@ -7,9 +7,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("users")
@@ -20,9 +29,33 @@ public class UserController {
 
     @GetMapping()
     public String list(@RequestParam(name = "page", defaultValue = "0") Integer page,
-                       @RequestParam(name = "size", defaultValue = "10") Integer size, Model model) {
+                       @RequestParam(name = "size", defaultValue = "10") Integer size,
+                       String name,
+                       Integer minAge,
+                       Integer maxAge,
+                       Model model) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.ASC, "id");
-        Page<User> userList = userRepository.findAll(pageable);
+        Page<User> userList = userRepository.findAll(
+                (Specification<User>) (root, query, criteriaBuilder) -> {
+                    List<Predicate> list = new ArrayList<>();
+
+                    if (!StringUtils.isEmpty(name)) {
+                        list.add(criteriaBuilder.like(root.get("name").as(String.class), "%" + name + "%"));
+                    }
+
+                    if (!StringUtils.isEmpty(minAge)) {
+                        list.add(criteriaBuilder.ge(root.get("age").as(Integer.class), minAge));
+                    }
+
+                    if (!StringUtils.isEmpty(maxAge)) {
+                        list.add(criteriaBuilder.le(root.get("age").as(Integer.class), maxAge));
+                    }
+
+                    Predicate[] p = new Predicate[list.size()];
+                    query.where(criteriaBuilder.and(list.toArray(p)));
+                    return query.getRestriction();
+                }
+                , pageable);
         model.addAttribute("userList", userList);
         return "user/list";
     }
