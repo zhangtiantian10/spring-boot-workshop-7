@@ -45,6 +45,30 @@
         </th:block>
         </tbody>
     </table>
+    <ul class="pagination">
+        <li th:class="${userList.number eq 0} ? 'disabled' : ''">
+            <a th:if="${not userList.first}"
+               th:href="@{${'/users'}(page=${userList.number-1},size=${userList.size})}">Previous</a>
+            <a th:if="${userList.first}" href="javascript:void(0);">Previous</a>
+        </li>
+
+        <li th:each="pageNo : ${#numbers.sequence(0, userList.totalPages - 1)}"
+            th:class="${userList.number eq pageNo}? 'active' : ''">
+            <a th:if="${userList.number  eq pageNo}" href="javascript:void(0);">
+                <span th:text="${pageNo + 1}"></span>
+            </a>
+            <a th:if="${not (userList.number  eq pageNo)}"
+               th:href="@{${'/users'}(page=${pageNo},size=${userList.size})}">
+                <span th:text="${pageNo + 1}"></span>
+            </a>
+
+        </li>
+        <li th:class="${userList.number + 1 ge userList.totalPages} ? 'disabled' : ''">
+            <a th:if="${not userList.last}"
+               th:href="@{${'/users'}(page=${userList.number+1},size=${userList.size})}">Next</a>
+            <a th:if="${userList.last}" href="javascript:void(0);">Next</a>
+        </li>
+    </ul>
 </div>
 </body>
 <script src="/js/jquery.min.js" charset="utf-8"></script>
