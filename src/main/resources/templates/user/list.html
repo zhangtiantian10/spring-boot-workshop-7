@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>user</title>
+  <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css">
+</head>
+
+<body>
+
+<a href="/users/add" type="button" class="btn btn-primary">添加</a>
+
+<table class="table table-bordered">
+  <tr>
+    <th>id</th>
+    <th>姓名</th>
+    <th>年龄</th>
+    <th>创建时间</th>
+    <th>更新时间</th>
+    <th>操作</th>
+  </tr>
+  <tr data-th-each="user : ${users}">
+    <td data-th-text="${user.id}"></td>
+    <td data-th-text="${user.name}"></td>
+    <td data-th-text="${user.age}"></td>
+    <td data-th-text="${user.createTime}"></td>
+    <td data-th-text="${user.updateTime}"></td>
+    <td>
+      <a href="" type="button" class="btn btn-primary">edit</a>
+      <a th:href="@{'users/' + ${user.id} + '/delete'}" type="button" class="btn btn-danger">delete</a>
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>
